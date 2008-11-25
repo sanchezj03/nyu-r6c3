@@ -1,0 +1,31 @@
+# == Schema Information
+# Schema version: 51
+#
+# Table name: consent_reasons
+#
+#  id     :integer       not null, primary key
+#  number :integer       
+#  reason :string(255)   
+#  yes    :integer       
+#
+
+consented:
+    id: 1
+    number: 1
+    reason: Consented
+not_consented:
+    id: 2
+    number: 2
+    reason: Agreed, not consented
+thinking:
+    id: 3
+    number: 3
+    reason: Thinking about it
+refused:
+    id: 4
+    number: 4
+    reason: Refused
+no_contact:
+    id: 5
+    number: 0
+    reason: No contact

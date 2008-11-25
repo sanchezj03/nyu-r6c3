@@ -1,0 +1,21 @@
+<% for @entry in @child.blue_card_entries %>
+
+<div style="margin-top:10px;background:#<%= cycle("eee", "fff") %>;padding:3px;width:500px">
+	<% form_tag :action => 'update', :id => @entry do -%>
+		<%= render :partial => 'form' %>
+	<% end -%>
+</div>
+<% end %>
+
+<fieldset style="margin-top:20px;width:500px">
+	<legend><b>Add Blue Card entry for this child:</b></legend>
+	<p><p>
+
+<b>Blue Card data for <em><%= @child.name %></em></b>
+	<p><p>
+	
+	<% form_tag :action => 'create', :id => @child do -%>
+		<% @entry = BlueCardEntry.new %>
+		<%= render :partial => 'form' %>
+	<% end %>
+</fieldset>

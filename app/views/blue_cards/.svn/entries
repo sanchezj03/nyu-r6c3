@@ -1,0 +1,54 @@
+8
+
+dir
+90
+svn://fahimo.com:1989/nyu/app/views/blue_cards
+svn://fahimo.com:1989
+
+
+
+2007-12-25T03:04:58.306977Z
+57
+Fahim
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+b027b21f-4b3f-0410-b683-efa7faf24c9a
+
+view.rhtml
+file
+
+
+
+
+2008-01-01T21:01:59.000000Z
+97d9e0e7043dbd6a876924a603bc01a4
+2007-12-25T03:04:58.306977Z
+57
+Fahim
+has-props
+
+_form.rhtml
+file
+
+
+
+
+2008-01-01T21:01:59.000000Z
+05d8fab29e3415b0533488c547e8f0aa
+2007-12-25T03:04:58.306977Z
+57
+Fahim
+has-props
+

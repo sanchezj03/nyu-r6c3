@@ -1,0 +1,8 @@
+<% @familymembers = familymembers %>
+<div>
+	<div class="subform_cell"><%= text_field :familymembers, :name, {:onblur => "process_update(this);", :title => "name", :maxlength => 100, :class => "familymember_text"} %></div>
+	<div class="subform_cell"><%= text_field :familymembers, :relation, {:onblur => "process_update(this);", :title => "relation", :maxlength => 100, :class => "familymember_text"} %></div>
+	<div class="subform_cell"><%= text_field :familymembers, :birthday_sd, {:onblur => "validate_birthday(this);", :title => "birthday", :maxlength => 10, :class => "familymember_date"} %></div>
+	<div class="subform_cell"><%= check_box(:familymembers, :deceased, {:onclick => "process_update(this);", :title => "deceased", :class => "familymember_checkbox"}) %></div>
+	<div class="subform_cell"><%=hidden_field :familymembers, :id %><%=image_tag("icon_deleteitem.gif", :size => "16x16", :alt => "Delete Family Member", :title => "Delete Family Member", :class => "subform_icon", :onclick => "process_delete(this.previousSibling.value);")%></div>
+</div>

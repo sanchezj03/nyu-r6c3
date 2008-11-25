@@ -1,0 +1,74 @@
+# == Schema Information
+# Schema version: 51
+#
+# Table name: children
+#
+#  birthday              :datetime      
+#  child_id              :integer       
+#  child_is_linked       :integer       
+#  child_school_id       :integer       
+#  childschoolId2        :integer       
+#  cohort                :integer       
+#  collected_on          :datetime      
+#  comments              :string(255)   
+#  created_on            :datetime      
+#  dt                    :string(100)   default("getdate")
+#  first_name            :string(255)   
+#  gender                :string(1)     
+#  hispanic              :integer       
+#  id                    :integer       not null, primary key
+#  is_primary            :integer       
+#  last_name             :string(255)   
+#  linked_child          :string(255)   
+#  race                  :string(255)   
+#  recruitment_id        :integer       
+#  secondary_yoked_child :string(255)   
+#  user_id               :integer       
+#  yoked_pair            :integer       
+#
+
+validates:
+  id: 1
+  recruitment_id: 63001
+  child_id: 630005
+  first_name: John
+  last_name: Doe
+  birthday: <%= Date.new(2003, 05, 31) %>
+  gender: m
+  hispanic: true
+  comments: >
+    Raised very well.
+    Going to be great some day - possibly at basketball?
+  race: ["African American"]
+  yoked_pair: true
+  is_primary: true
+  collected_on: <%= Date.new %>
+  child_is_linked: true
+  linked_child: Stanley Kubrick
+validates_minimally:
+  id: 2
+  first_name: Michelle
+  last_name: Jordan
+last_name_missing:
+  id: 3
+  first_name: John
+  last_name: 
+first_name_missing:
+  id: 4
+  first_name: 
+  last_name: Doe
+custom_child_id: 
+  id: 5
+  first_name: John
+  last_name: Doe
+  recruitment_id: 63001
+  child_id: 630013
+custom_recruitment_id:
+  id: 6
+  first_name: Sean
+  last_name: John
+  child_id: 630013
+  recruitment_id: 63002
+invalid_custom_child_id:
+  id: 7
+  child_id: 6300013

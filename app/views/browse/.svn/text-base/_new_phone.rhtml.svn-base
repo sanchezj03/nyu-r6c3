@@ -1,0 +1,28 @@
+<tr style="border:1px solid #eee;background:#fff;padding;10px;display:none;position:absolute" id="new_phone">
+	<td colspan="2" style="padding:10px">
+		<b style="display:block;padding-bottom:7px">New Phone Number:</b>
+		<% form_tag :controller => 'add', :action => 'phone', :id => @caregiver -%>
+		<table>
+		<tr>
+			<td>Type:</td>
+			<td><%= select :phone, :mode, ["Home", "Mobile", "Work","Other"] %></td>
+		</tr>
+			<Td>Number:</td>
+			<td><%= text_field :phone, :number, :style => "width:120px" %></td>
+		</tr>
+		<tr>
+			<td>Comments:</td>
+			<td><%= text_area :phone, :comments, :style => "width:120px;height:50px" %></td>
+		</tr>
+		<tr>
+			<td>Collected:</td>
+			<td><%= date_select :phone, :collected_on %></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><%= submit_tag "Save" %>  <%= link_to_function "Cancel", "$('new_phone').hide()"%></td>
+		</tr>
+		</table>
+		<% end -%>
+	</td>
+</tr>

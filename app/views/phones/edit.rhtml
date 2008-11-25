@@ -1,0 +1,12 @@
+<div class="inner">
+	<%= remote_link(child_caregiver_url(@child, @caregiver), "caregivers", :lose_focus => true) %>
+	<h3>Edit <%= @phone.mode %> phone number for <%= @caregiver.name %></h3>
+
+	<%= error_messages_for :phone %>
+	<div class="indented">
+		<% remote_update_form_for @phone, :element => "caregivers#{@caregiver.id}", :url => child_caregiver_phone_url(@child, @caregiver, @phone) do -%>
+			<%= render :partial => 'form' %>
+			<%= submit_tag "Save"%>
+		<% end -%>
+	</div>
+</div>

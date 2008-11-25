@@ -1,0 +1,69 @@
+<style type="text/css">
+.search {
+	padding: 5px;
+}
+.children {
+	margin-top: 10px;
+}
+h3 {
+	margin: 0 0 5px 0;
+	font: bold 11px verdana;
+	padding: 2px;
+}
+#children {
+	width: 100%;
+}
+#children thead {
+	font: bold 11px verdana;
+	color: gray;
+}
+#children thead td { border-bottom: 1px solid #ccc; }
+form { margin: 0; }
+#notice {
+	margin: 10px;
+	font: bold 11px verdana;
+	color: red;
+	margin-left: 0;
+}
+</style>
+
+<div class="search">
+<% form_tag do -%>
+	<b>Search</b> by
+	<%= select_tag "field", options_for_select(search_fields, params[:field]) %>
+	for <%= text_field_tag "query", params[:query] %> <%= submit_tag "Search" %>
+<% end -%>
+</div>
+
+<% if @children.size > 0 %>
+<div class="children">
+	<h3>We found <%= pluralize @children.size, "child" %> that match your search request</h3>
+
+	<table id="children" cellspacing="0" cellpadding="3">
+	<thead>
+		<% if @caregiver_search %>
+		<td>Caregiver's Name</td>
+		<% end %>
+		<td>Child's Last Name</td>
+		<td>Child's First Name</td>
+		<td>Child ID</td>
+		<td>Recruitment Child ID</td>
+		<td>Options</td>
+	</thead>
+	<% for @child in @children %>
+		<tr style="background:#<%= cycle("eee", "fff") %>">
+			<% if @caregiver_search %>
+			<td><%= @child.caregiver.last_name %>, <%= @child.caregiver.first_name %></td>
+			<% end %>
+			<td><%= @child.last_name %></td>
+			<td><%= @child.first_name %></td>
+			<td><%= @child.child_id %></td>
+			<td><%= @child.recruitment_id %></td>
+			<td style="font-size:11px"><%= link_to "View Child", child_url(@child) %></td>
+		</tr>
+	<% end %>
+
+	
+	</table>
+</div>
+<% end %>

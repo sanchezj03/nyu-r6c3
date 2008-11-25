@@ -1,0 +1,61 @@
+Edit Caregiver Information for <%= @child.name %> <br />
+<b><%= @caregiver.name %></b> <br />
+
+<% form_tag :controller => 'edit', :action => "update_caregiver", :id => @child.rchild_id, :caregiver_id => @caregiver.id do -%>
+
+
+<table style="margin-bottom:10px;font-size:11px">
+<tr>
+	<td><b>Name:</b></td>
+	<td><%= text_field :caregiver, :last_name, :size => 10 %>, <%= text_field :caregiver, :first_name, :size => 10 %></td>
+</tr>
+<tr>
+	<td></td>
+	<td style="color:gray">Last name, First name (eg. Smith, John)</td>
+</tr>
+<tr>
+	<td rowspan="2" valign="top"><b>Relation:</b></td>
+	<td><%= select :caregiver, :caregiver_relation_id, CaregiverRelation.find(:all).collect {|r| [r.relation, r.id] }, :include_blank => :true %></td>
+</tr>
+<tr>
+	<td>Other: <%= text_field :caregiver, :other_relation %></td>
+</tr>
+</table>
+
+<table style="font-size:11px">
+<tr>
+	<td colspan="3"><b>Comments:</b></td>
+</tr>
+<tr>
+	<td rowspan="3" width="60"></td>
+	<td><%= text_area :caregiver, :comments, :rows => 3 %></td>
+</tr>
+</table>
+
+<table style="font-size:11px">
+<tr>
+	<td><b>Collected on:</b></td>
+	<td><%= date_select :caregiver, :collected_on %></td>
+</tr>
+</table>
+
+<%= submit_tag "Save" %>
+<% end -%> 
+
+<br><Br>
+
+
+
+<b>Addresses:</b>
+<ul style="margin-top:0">
+	<% for @address in @caregiver.addresses %>
+	<li><%= @address %> <%= link_to "Edit", :controller => 'edit', :action => 'address', :id => @child.rchild_id, :address_id => @address.id %></li>
+	<% end %>
+</ul>
+
+<b>Telephone Numbers:</b>
+<ul style="margin-top:0">
+	<% for @phone in @caregiver.phones %>
+	<li><%= @phone.number %> (<%= @phone.mode %>) <%= link_to "Edit", :controller => 'edit', :action => 'phone', :id => @child.rchild_id, :phone_id => @phone.id %></li>
+	<% end %>
+</ul>

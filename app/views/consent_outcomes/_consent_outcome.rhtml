@@ -1,0 +1,18 @@
+<%= remote_link(new_child_consent_outcome_url(@child), 'consent_outcome', :text => "Add Consent Outcome") %>
+<h3>First Grade-Consent Outcome</h3>
+
+<% for consent in @child.consent_outcomes %>
+<div id="consent_outcome<%= consent.id %>" style="margin-bottom:7px">
+	<div class="indented">
+		<%= remote_link(edit_child_consent_outcome_url(@child, consent), "consent_outcome") %>
+		CO_Status: <%= "#{consent.value}" %>
+		<span style="color:gray">
+			<% if consent.comments %><%= consent.comments %><% end %>
+			<% if consent.caregiver %>
+				(Caregiver: <%= consent.caregiver.name %>
+				
+			<% end %>
+		</span>
+	</div>
+</div>
+<% end %>

@@ -1,0 +1,28 @@
+<%= remote_link(new_child_consent_url(@child), 'consent', :text => "Add Consent") %>
+<h3>Consent</h3>
+
+<% for consent in @child.consents %>
+<div id="consent<%= consent.id %>" style="margin-bottom:7px">
+	<div class="indented">
+	
+		<%= remote_link(edit_child_consent_url(@child, consent), "consent") %>
+		
+		<em>Phase <%= consent.phase %>:</em> 
+		
+		<% if consent.withdrawn? %>
+			<span style="color:red">Withdrawn!</span>
+		<% elsif consent.consented? %>
+			Consented!
+		<% else %>
+			<%= consent.consent_reason.reason %>.
+		<% end %> 
+		
+		<span style="color:gray">
+		<% if consent.comments %><%= consent.comments %><% end %>
+		<% if consent.caregiver %>
+			(Caregiver: <%= consent.caregiver.name %>.<% if consent.is_primary_caregiver? %> This caregiver is the primary respondent.<% end %>)
+		<% end %>
+		</span>
+	</div>
+</div>
+<% end %>

@@ -1,0 +1,51 @@
+<h1>Users</h1>
+
+<table cellspacing="0" cellpadding="3" width="740">
+<tr style="font-size:11px">
+	<td>Login Name</td>
+	<td>Email</td>
+	<td>Access Level</td>
+	<td>Notify*</td>
+	<td></td>
+	<td>Options</td>
+</tr>
+<% for @user in User.find(:all) %>
+<% form_tag({:action => :update_user, :id => @user}) do -%>
+<tr style="background:#<%= cycle("eee", "fff") %>" id="u<%= @user.id %>">
+	<td><%= text_field :user, :login, :size => 20 %></td>
+	<td><%= text_field :user, :email, :size => 20 %></td>
+	<td><%= select :user, :access_level, ["admin", "viewer", "adder"] %></td>
+	<td><%= check_box :user, :send_withdraw_email %></td>
+	<td><%= submit_tag "Save" %> </td>
+	<td style="font-size:11px">
+		<%= link_to "Usage Logs", :action => :usage_logs, :id => @user %>, 
+		<%= link_to_remote "Delete", :url => {:action => :delete_user, :id => @user}, :update => "u#{@user.id}", :confirm => "Are you sure you want to delete #{@user.name}?" %>
+	</td>
+</tr>
+<% end -%>
+<% end %>
+</table>
+
+<p><small>* By checking the notify box, the user will be e-mailed when a child is withdrawn from the study</small></p>
+
+<table cellspacing="0" cellpadding="3" width="740" style="margin-top:30px">
+<tr>
+	<td colspan="4" style="font-weight:bold">New User:</td>
+</tr>
+<tr style="font-size:11px">
+	<td>Login Name</td>
+	<td>Email</td>
+	<td>Password</td>
+	<td>Access Level</td>
+	<td></td>
+</tr>
+<%= @user = User.new; form_tag({:action => :create_user}) do -%>
+<tr style="background:#eee">
+	<td><%= text_field :user, :login, :size => 20 %></td>
+	<td><%= text_field :user, :email, :size => 20 %></td>
+	<td><%= text_field :user, :password, :size => 20 %></td>
+	<td><%= select :user, :access_level, ["admin", "viewer", "adder"] %></td>
+	<td><%= submit_tag "Save" %> </td>
+</tr>
+<% end -%>
+</table>

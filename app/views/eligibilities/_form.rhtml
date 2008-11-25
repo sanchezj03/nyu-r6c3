@@ -1,0 +1,34 @@
+<!-- comments-->
+<%= hidden_field :eligibility, 'type' %>
+<style type="text/css">.fieldWithErrors { display: inline; } .fieldWithErrors input { width: auto; }</style>
+
+<table>
+<tr>
+	<td>Is <%= @child.pronoun %> eligible?</td>
+	<td>
+		<%= radio_button :eligibility, :eligible, 1, :onclick => "$('eligible_reasons_#{@eligibility.type}').show();$('not_eligible_reasons_#{@eligibility.type}').hide()" %> Yes 
+		<%= radio_button :eligibility, :eligible, 0, :onclick => "$('not_eligible_reasons_#{@eligibility.type}').show();$('eligible_reasons_#{@eligibility.type}').hide()" %> No
+	</td>
+</tr>
+
+<!-- Eligibility Dropdown - if not eligible -->
+<tr style="display:<%= "none" if @eligibility.eligible? or @eligibility.new_record? %>" id="not_eligible_reasons_<%= @eligibility.type %>">
+	<td>Reason:</td>
+	<td><%= select :eligibility, :not_eligible_reason_id, EligibilityReason.find_all_by_eligible(0).collect {|r| [r.reason, r.id] }, :include_blank => :true %></td>
+</tr>
+
+<!-- Eligibility Dropdown - if eligible -->
+<tr style="display:<%= "none" if @eligibility.not_eligible? or @eligibility.new_record? %>" id="eligible_reasons_<%= @eligibility.type %>">
+	<td>Reason:</td>
+	<td><%= select :eligibility, :eligible_reason_id, EligibilityReason.find_all_by_eligible(1).collect {|r| [r.reason, r.id] }, :include_blank => :true %></td>
+</tr>
+
+<tr>
+	<td>Comments:</td>
+	<td><%= text_area :eligibility, :comments, :style => "width:200px;height:60px" %></td>
+</tr>
+<tr>
+	<td>Collected:</td>
+	<td><%= date_select :eligibility, :collected_on %></td>
+</tr>
+</table>

@@ -1,0 +1,27 @@
+.leftcolumn, .rightcolumn {
+	width: 458px
+}
+
+.fieldset {
+	width: 448px;
+	padding: 5px
+}
+.fieldset .inner, .fieldset .indented {
+	padding: 0px;
+}
+
+.rightcolumn .inner {
+	width: 415px;
+}
+
+form {
+ padding: 0;
+}
+
+.leftcolumn #child p {
+	margin: 10px 0 0 0;
+}
+
+table {
+	width: auto;
+}

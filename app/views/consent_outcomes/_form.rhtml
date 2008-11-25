@@ -1,0 +1,25 @@
+<table>
+<tr>
+	<td>Consented Outcome:</td>
+	<td>
+		<%= select(:consent, :value, ConsentOutcomeValue.find(:all).collect {|p| p.outcome }, :include_blank => :true) %>
+		</td>
+</tr>
+
+<tr>
+	<td>Withdrawn?:</td>
+	<td><%= select(:consent, :withdrawn, ["0 No", "1 Yes"] , :selected => "Consented Withdrawn Status:") %>
+</tr>
+<tr>
+	<td>Comments:</td>
+	<td><%= text_area :consent, :comments, :style => "width:200px;height:60px" %></td>
+</tr>
+<tr>
+	<td>Caregiver:</td>
+	<td><%= select :consent, :caregiver_id, @child.caregivers.find(:all).collect {|r| [r.name, r.id]}, :include_blank => true %></td>
+</tr>
+<tr>
+	<td>Collected:</td>
+	<td><%= date_select :consent, :collected_on %></td>
+</tr>
+</table>

@@ -1,0 +1,84 @@
+<table width="400">
+<tr>
+	<td>Cohort:</td>
+	<td colspan="2"><%= select :child, :cohort, [4, 3, 2, 1] %></td>
+</tr>
+<tr>
+	<td>Child's Name:</td>
+	<td><%= text_field :child, :first_name, :size => 15 %></td>
+	<td><%= text_field :child, :last_name, :size => 15 %></td>
+</tr>
+<tr style="font-size:11px;color:gray">
+	<td></td>
+	<td>(first)</td>
+	<td>(last)</td>
+</tr>
+</table>
+
+	<p>
+		School Child ID: 
+		<span style="display:block;margin-top:3px">
+			<%= text_field :child, :child_school_id%>
+		</span>
+	</p>
+
+
+<table width="400" style="margin-bottom:20px" class="gender-dob">
+<tr>
+	<td>Child's date of birth:</td>
+	<td><%= date_select :child, :birthday, :start_year => 2000, :include_blank => true %></td>
+</tr>
+<tr>
+	<td>Child's gender:</td>
+	<td><%= radio_button :child, :gender, 'm' %> Male</td>
+</tr>
+<tr>
+	<td></td>
+	<td><%= radio_button :child, :gender, 'f' %> Female</td>
+</tr>
+</table>
+
+<table>
+<tr>
+	<td colspan="2">The following describes the child's race:</td>
+</tr>
+<% for race in Child.RACES %>
+<tr>
+	<td style="width:20px;padding-left:30px">
+		<%= check_box_tag "child[race][]", race, @child.is_of_race?(race) %>
+	</td>
+	<td><%= race %></td>
+</tr>
+<% end %>
+<tr>
+	<td style="width:20px;padding-left:30px"><%= check_box :child, :hispanic %></td>
+	<td>Latina/Hispanic</td>
+</tr>
+<tr>
+	<td></td>
+	<td>Other: <input type="text" name="race[]" /></td>
+</tr>
+</table>
+
+<p>	Is child a yoked pair? Are the Children twins?
+	<%= check_box :child, :yoked_pair, :onclick => "set_display('yoked_pair_options', this.checked)" %></p>
+
+<p id="yoked_pair_options" <%= 'style="display:none"' unless @child.yoked_pair %>>
+	If child is a yoked pair, is he/she the primary or secondary? <br />
+	<%= radio_button :child, :is_primary, 1 %> Primary (First Born)
+	<%= radio_button :child, :is_primary, 0 %> Secondary
+	<p>
+		what is the child id of the other sibling? 
+		<span style="display:block;margin-top:3px">
+			<%= text_field :child, :secondary_yoked_child %>
+		</span>
+	</p>
+</p>
+
+<p>Is the child linked? 
+	<%= check_box :child, :child_is_linked, :onclick => "set_display('child_link_options', this.checked)" %></p>
+
+<p id="child_link_options" <%= 'style="display:none"' unless @child.child_is_linked %>> 
+	Who is this child link to? <br />
+	<%= text_field :child, :linked_child %>
+</p>

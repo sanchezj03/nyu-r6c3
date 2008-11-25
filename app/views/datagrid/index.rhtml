@@ -1,0 +1,25 @@
+<h2 class="header_datagrid">Unspace Live Datagrid</h2>
+
+<%= javascript_include_tag "datagrid" %>
+<%= stylesheet_link_tag "datagrid", :media => "all" %>
+
+<div id="subform">
+	<div id="familymemberstable">
+		<div id="subform_headers">
+			<span class="subform_header_text">Name</span>
+			<span class="subform_header_text">Relation</span>
+			<span class="subform_header_date">Birthday</span>
+			<span class="subform_header_checkbox">Deceased?</span>
+		</div>
+		<div id="familymembers">
+			<%= render(:partial => "familymembers", :collection => @familymember) %>
+		</div>
+	</div>
+	<div>
+		<button type="button" class="additem" onclick="new Ajax.Updater('familymembers', '<%=url_for(:action => "familymembers_add", :id => params[:id])%>', {asynchronous:true});">Add a Family Member</button>
+	</div>
+</div>
+
+<br />
+
+<%= link_to "Creating a Live Datagrid", "http://unspace.ca/discover/datagrid/" %>

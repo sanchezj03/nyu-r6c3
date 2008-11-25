@@ -1,0 +1,208 @@
+<style type="text/css">
+.child, .caregiver {
+	margin: 0px 0 20px 10px;
+	border: solid #ccc;
+	border-width: 0 1px 1px 1px;
+	padding: 10px 0 10px 10px;
+	width: 700px;
+	background: #fafafa;
+}
+h3 {
+	margin: 0;
+	border-bottom: 1px solid #ccc;
+	//text-decoration: underline;
+}
+h1 {
+	margin: 0;
+}
+.date {
+	margin-bottom: 30px;
+}
+</style>
+
+<h1><%= @child.name %></h1>
+
+<ul id="nav">
+        <li id="home" class="activelink"><a href="#">Home</a></li>
+        <li id="who"><a href="#">About</a></li>
+        <li id="prod"><a href="#">Product</a></li>
+        <li id="serv"><a href="#">Services</a></li>
+        <li id="cont"><a href="#">Contact us</a></li>
+
+    </ul>
+
+<h3>Child information</h3>
+<div class="child">
+	<table width="300" style="margin-bottom:20px">
+	<tr>
+		<td>Child's date of birth:</td>
+		<td><%= @child.birthday %></td>
+	</tr>
+	<tr>
+		<td>Child's gender:</td>
+		<td><%= @child.sex.capitalize %></td>
+	</tr>
+	<tr>
+		<td>Latino/hispanic?</td>
+		<td><%= @child.hispanic ? "Yes" : "No" %></td>
+	</tr>
+	</table>
+	
+	<table style="margin-bottom:20px">
+	<tr>
+		<td colspan="2">The following describes the child's race:</td>
+	</tr>
+	<% for race in @child.race %>
+	<tr>
+		<td>*</td>
+		<td><%= race %></td>
+	</tr>
+	<% end %>
+	</table>
+	
+	<% if @child.yoked_pair %>
+		The child is a yoked pair, and <%= @child.gender == "m" ? "he" : "she" %> is the <%= @child.primary_secondary %> child.
+	<% else %>
+		This child is not a yoked pair.
+	<% end %>
+</div>
+
+<h3 style="padding-bottom:5px">
+	Eligibility Information
+	<a href="#" onclick="$('update_eligibility').toggle();return false" style="font:11px verdana;margin-left:10px">Update Eligibility</a>
+</h3>
+<div class="child">
+	<% form_tag({:controller => 'add', :action => 'eligibility', :id => @child}, :id => "update_eligibility", :style => "display:none;margin-bottom:5px;padding-bottom:5px;border-bottom:1px solid #ccc;width:97%") do -%>
+	<table>
+	<tr>
+		<td colspan="2" style="padding-bottom:5px">
+			<b>Update Eligibility:</b>
+		</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>Eligible?</td>
+		<td><%= radio_button :eligible, :eligible, true, :onclick => "$('eligible_reason').hide()" %> Yes
+			<%= radio_button :eligible, :eligible, false, :onclick => "$('eligible_reason').show()" %> No</td>
+		<td>
+		<td style="padding-left:20px">
+			Collected On: 
+		</td>
+		<td><%= date_select :eligible, :collected_on %></td>
+	</tr>
+	<tr>
+		<td valign="top" rowspan="2">Comments:</td>
+		<td rowspan="2"><%= text_area :eligible, :comments, :style => "width:200px;height:65px" %></td>
+		<td colspan="3" id="eligible_reason" style="padding-left:25px;display:none">Reason: <%= select :eligible, :status, Eligibility.reasons %></td>
+	</tr>
+	<tr>
+		<td colspan="4" align="center"><%= submit_tag "Save", :style => "margin-right:10px" %> <%= link_to_function "Cancel", "$('update_eligibility').hide()"%></td>
+	</tr>
+	</table>
+	<% end -%>
+	
+	<table width="97%">
+	<% for eligibility in @child.eligibilities %>
+	<tr<% if eligibility != @child.eligibilities.first %> style="color:gray;font-size:11px"<% end %>>
+		<td><%= @child.pronoun.capitalize %> is 
+			<% if eligibility.eligible %>
+				eligible.
+			<% else %>
+				not eligible because "<%= eligibility.status != '' ? eligibility.status : "No reason specified" %>".
+			<% end %>
+			<%= eligibility.comments.capitalize %><%= "." if eligibility.comments != "" %>
+		</td>
+		<td style="width:200px;font-size:11px;color:gray">Collected by <%= eligibility.user.login %> on <%= eligibility.collected_on %></td>
+	</tr>
+	<% end %>
+	</table>
+</div>
+
+<h3 style="padding-bottom:5px">
+	Caregiver information
+	<a href="#" onclick="$('new_caregiver').toggle(); return false" style="font:11px verdana;margin-left:10px">Add Caregiver</a>
+</h3>
+
+<div class="caregiver">
+	<% form_tag({:controller => 'add', :action => 'caregiver', :id => @child}, :style => "border-bottom:1px solid #ccc;width:98%;display:none;margin-bottom:10px", :id => 'new_caregiver') do -%>
+		<b style="display:block;margin-bottom:8px">New Caregiver:</b>
+		<table>
+		<tr>
+			<td>Collected On:</td>
+			<td><%= date_select :caregiver, :collected_on %></td>
+		</tr>
+		</table>
+		<%= render :partial => 'add/caregiver'%>
+		<%= submit_tag "Add Caregiver", :style => "margin:10px" %>
+	<% end -%>
+	
+	<% for @caregiver in @child.caregivers %>
+	<table cellspacing="0" cellpadding="3" style="margin-bottom:15px">
+	<tr>
+		<td>Caregiver's Name:</td>
+		<td><b><%= @caregiver.name %></b></td>
+	</tr>
+	<tr>
+		<td>Relationship to Child:</td>
+		<td><%= @caregiver.relation %></td>
+	</tr>
+	<tr>
+		<td>Address:</td>
+		<td>
+			<% @address = @caregiver.addresses.find(:first, :order => "id desc") %>
+			<%= @address.home_number %> <%= @address.street %>, Brooklyn, NY <%= @address.zip_code %>
+			<a href="#" onclick="$('new_address_tr').toggle();return false" style="margin-left:10px;font-size:11px">Add new address</a>
+		</td>
+	</tr>
+	<tr style="background:#FFDADA;display:none" id="new_address_tr">
+		<td>New Address:</td>
+		<td>
+			 :controller => 'add', :action => 'address', :id => @caregiver %>
+			<table>
+			<tr>
+				<td><%= text_field :new_address, :home_number, :size => 6 %></td>
+				<td><%= text_field :new_address, :street %></td>
+				<td><%= text_field :new_address, :apartment, :size => 10 %></td>
+			</tr>
+			<tr style="font-size:11px;color:gray">
+				<td>(number)</td>
+				<td>(street)</td>
+				<td>(apartment #)</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					Brooklyn, NY &nbsp;&nbsp;&nbsp;
+					Zip Code: <%= text_field :new_address, :zip_code, :size => 7 %>
+					<%= submit_tag "Save", :style => "margin-left:10px" %>
+				</td>
+			</tr>
+			</table>
+			<% end -%>
+		</td>
+	</tr>
+	<% if @caregiver.addresses.count > 1 %>
+	<tr>
+		<td></td>
+		<td style="color:gray;font-size:11px">This caregiver has <%= @caregiver.addresses.count - 1 %> more addresses to his/her name:</td>
+	</tr>
+	<% for @address in @caregiver.addresses.find(:all, :conditions => ["id != ?", @address.id], :order => "id desc") %>
+	<tr>
+		<td></td>
+		<td style="color:gray"><%= @address.home_number %> <%= @address.street %>, Brooklyn, NY <%= @address.zip_code %></td>
+	</tr>
+	<% end %>
+	<% end %>
+	
+	<tr>
+		<td rowspan="3" valign="top">Phone:</td>
+		<td>Home: <%#= @caregiver.phones.inspect %> <a href="#" onclick="return false" style="margin-left:10px;font-size:11px">Add new phone number</a></td>
+	</tr>
+	<tr id="add_phone" style="display:">
+		<td colspan="4"><%= select :phone, :type, ["home", "work", "wireless"] %> Number: <%= text_field :phone, :number %></td>
+	</tr>
+	</table>
+	<% end %>
+	
+	<div style="text-align:right;padding:5px;margin-top:10px;border-top:1px solid #ccc;width:97%;color:gray;font-size:11px"><%= @child.caregivers.count %> caregivers to this child</div>
+	</table>
+</div>

@@ -1,0 +1,39 @@
+<tr style="background:#fff;padding;10px;display:none;position:absolute" id="new_address">
+	<td colspan="2" style="padding:7px;border:1px solid gray;">
+		<b style="display:block;padding-bottom:7px">New Address:</b>
+		<% form_tag :controller => 'add', :action => 'address', :id => @caregiver do -%>
+		<table>
+		<tr>
+			<td><%= text_field :new_address, :home_number, :size => 6 %></td>
+			<td><%= text_field :new_address, :street %></td>
+			<td><%= text_field :new_address, :apartment, :size => 10 %></td>
+		</tr>
+		<tr style="font-size:11px;color:gray">
+			<td>(number)</td>
+			<td>(street)</td>
+			<td>(apartment #)</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<%= text_field :new_address, :city, :size => 10, :value => "Brooklyn" %>, 
+				<%= text_field :new_address, :state, :size => 3, :value => "NY" %> &nbsp;&nbsp;&nbsp;Zip Code: 
+				<%= text_field :new_address, :zip_code, :size => 7 %>
+			</td>
+		</tr>
+		<tr>
+			<td>Comments:</td>
+			<td><%= text_field :new_address, :comments %></td>
+		</tr>
+		<tr>
+			<td>Collected:</td>
+			<td><%= date_select :new_address, :collected_on %></td>
+		</tr>
+		
+		<tr>
+			<td colspan="3">
+				<%= submit_tag "Save", :style => "margin-right:10px;" %> <%= link_to_function "Cancel", "$('new_address').hide()"%>
+			</td>
+		</table>
+		<% end -%>
+	</td>
+</tr>

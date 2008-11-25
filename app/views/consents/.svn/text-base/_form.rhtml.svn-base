@@ -1,0 +1,37 @@
+<table>
+<tr>
+	<td>Phase:</td>
+	<td><%= select :consent, :phase, 1..3 %></td>
+</tr>
+<tr>
+	<td>Consented?:</td>
+	<td><%= radio_button :consent, :consented, true, :onclick => "$('cons-reason').hide()" %> Yes 
+		<%= radio_button :consent, :consented, false, :onclick => "$('cons-reason').show()" %> No
+	</td>
+</tr>
+<tr style="display:<%= "none" if !@consent.consented %>" id="cons-reason">
+	<td>Reason:</td>
+	<td><%= select :consent, :consent_reason_id, ConsentReason.find(:all).collect {|r| [r.reason, r.id] }, :include_blank => :true %></td>
+</tr>
+<tr>
+	<td>Withdrawn?:</td>
+	<td><%= check_box :consent, :withdrawn, :onclick => "checked = this.checked;['consented_true', 'consented_false', 'consent_reason_id'].each(function (item) { checked ? $('consent_' + item).disable() : $('consent_' + item).enable() })" %></td>
+</tr>
+<tr>
+	<td>Comments:</td>
+	<td><%= text_area :consent, :comments, :style => "width:200px;height:60px" %></td>
+</tr>
+<tr>
+	<td>Caregiver:</td>
+	<td><%= select :consent, :caregiver_id, @child.caregivers.find(:all).collect {|r| [r.name, r.id]}, :include_blank => true %></td>
+</tr>
+<tr>
+	<td colspan="2" class="indented">
+		<%= check_box :consent, :is_primary_caregiver %>The caregiver the designated respondent (Phase 2 only)
+	</td>
+</tr>
+<tr>
+	<td>Collected:</td>
+	<td><%= date_select :consent, :collected_on %></td>
+</tr>
+</table>

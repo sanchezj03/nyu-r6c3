@@ -1,0 +1,30 @@
+Edit Phone Information for <%=@child.name%> <hr>
+
+<% form_tag :controller => 'edit', :action => "update_phone", :id => @child.rchild_id, :phone_id => @phone.id do -%>
+
+		<table>
+		<tr>
+			<td>Type:</td>
+			<td><%= select :phone, :mode, ["home", "mobile", "work"] %></td>
+		</tr>
+			<Td>Number:</td>
+			<td><%= text_field :phone, :number, :style => "width:120px" %></td>
+		</tr>
+		<tr>
+			<td>Comments:</td>
+			<td><%= text_area :phone, :comments, :style => "width:120px;height:50px" %></td>
+		</tr>
+		<tr>
+			<td>Collected:</td>
+			<td><%= date_select :phone, :collected_on %></td>
+		</tr>
+		</table>
+
+
+
+<%= submit_tag "Save" %>   
+
+<%=link_to "Cancel", :controller=> 'browse', :action=> "child", :id=> @child.id %> 
+
+
+<%= end -%> 

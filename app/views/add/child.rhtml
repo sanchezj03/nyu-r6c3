@@ -1,0 +1,116 @@
+<style type="text/css">
+	
+	
+<title>IPS R6C3 Data Entry </title>
+	
+.child, .caregiver, .box {
+	margin: 0px 0 20px 10px;
+	padding: 10px 0 10px 10px;
+	width: 100%;
+}
+h3 {
+	margin: 0;
+}
+h1 {
+	margin: 0 0 30px 0;
+}
+.date {
+	margin-bottom: 30px;
+}
+</style>
+
+<%= stylesheet_link_tag "nifty" %>
+
+<h1>Add Child</h1>
+
+<% form_tag :action => 'save_child' do -%>
+
+<table style="width:780px" cellspacing="0" cellpadding="0">
+<tr>
+	<td style="width:390px;" valign="top">
+		<h3>Child information</h3>
+		<div class="child">
+			<table width="400">
+			<tr>
+				<td>Child's Name:</td>
+				<td><%= text_field :child, :first_name, :size => 15 %></td>
+				<td><%= text_field :child, :last_name, :size => 15 %></td>
+			</tr>
+			<tr style="font-size:11px;color:gray">
+				<td></td>
+				<td>(first)</td>
+				<td>(last)</td>
+			</tr>
+			</table>
+			
+			<table width="400" style="margin-bottom:20px">
+			<tr>
+				<td>Child's date of birth:</td>
+				<td><%= date_select :child, :birthday, :start_year => 2003, :include_blank => true %></td>
+			</tr>
+			<tr>
+				<td>Child's gender:</td>
+				<td><%= radio_button :child, :gender, 'm' %> Male</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= radio_button :child, :gender, 'f' %> Female</td>
+			</tr>
+			<tr>
+				<td>Latin@/hispanic?</td>
+				<td><%= check_box :child, :hispanic %> Check if yes</td>
+			</tr>
+			</table>
+	
+			<table>
+			<tr>
+				<td colspan="2">The following describes the child's race:</td>
+			</tr>
+			<% for race in Child.RACES %>
+			<tr>
+				<td style="width:20px;padding-left:30px"><input type="checkbox" name="race[]" value="<%= race %> " /></td>
+				<td><%= race %></td>
+			</tr>
+			<% end %>
+			<tr>
+				<td></td>
+				<td>Other: <input type="text" name="race[]" /></td>
+			</tr>
+			</table>
+	
+			<p>Is child a yoked pair?Are the Children twins? <%= check_box :child, :yoked_pair, :onclick => "$('yoked_pair_options').toggle()" %></p>
+
+			<p id="yoked_pair_options" style="display:none">
+				If child is a yoked pair, is he/she the primary or secondary? <br />
+				<%= radio_button :child, :is_primary, true %> Primary (First Born)
+				<%= radio_button :child, :is_primary, false %> Secondary
+			</p>
+
+<p>Is the child linked? <%= check_box :child, :child_is_linked, :onclick => "$('child_link_options').toggle()" %></p>
+
+            <p id="child_link_options" style="display:none"> 
+                Who is this child link to? <br />
+                <%= text_field :child, :linked_child %>
+            </p>
+			
+			
+			<%= link_to "View this child's blue card information", :controller => "blue_cards", :action => "view", :id => @child.id %> 
+
+
+
+
+		</div>
+	</td>
+	<td style="width:300px;margin-left:50px" valign="top" rowspan="2">
+		<h3>Save Child</h3>
+		<div class="box">
+			You will be able to add caregivers, schools and the other information once you save
+			this child. 
+			<p>When was this data collected?<br /><%= date_select :child, :collected_on %></p>
+			<p>Ready? <%= submit_tag "Save" %></p>
+		</div>
+	</td>
+</tr>
+</table>
+
+<% end -%>

@@ -1,0 +1,27 @@
+<div style="border:1px solid gray;background:#fff;padding:7px;display:none;position:absolute" id="update_eligibility">
+	<b style="display:block;padding-bottom:7px">Update Eligibility:</b>
+	<% form_tag :controller => 'add', :action => 'eligibility', :id => @child do -%>
+	<table>
+	<tr>
+		<td>Is <%= @child.pronoun %> eligible?</td>
+		<td><%= radio_button :eligible, :eligible, true, :onclick => "$('elig-reason').hide()" %> Yes <%= radio_button :eligible, :eligible, false, :onclick => "$('elig-reason').show()" %> No </td>
+	</tr>
+	<tr style="display:none" id="elig-reason">
+		<td>Reason:</td>
+		<td><%= select :eligible, :reason_id, EligibilityReason.find(:all).collect {|r| [r.reason, r.id] }, :include_blank => :true %></td>
+	</tr>
+	<tr>
+		<td>Comments:</td>
+		<td><%= text_area :eligible, :comments, :style => "width:200px;height:60px" %></td>
+	</tr>
+	<tr>
+		<td>Collected:</td>
+		<td><%= date_select :eligible, :collected_on %></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= submit_tag "Save" %> <%= link_to_function "Cancel", "$('update_eligibility').hide()"%></td>
+	</tr>
+	</table>
+	<% end -%>
+</div>

@@ -1,0 +1,15 @@
+<tr>
+	<td width="50"><%= @phone.mode.capitalize %></td>
+	<td><%= number_to_phone @phone.number or "Not Specified" %>
+	<span style="color:gray"><small>(Collected on: <%= @phone.collected_on %>)</small></span>
+	</td>
+</tr>
+<% if @phone.comments != nil and @phone.comments != "" %>
+<tr>
+	<td></td>
+	<td style="color:gray;font-size:11px">
+		(<%= @phone.comments %>) <br>
+	</td>
+</tr>
+<% end %>
+	

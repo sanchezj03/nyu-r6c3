@@ -1,0 +1,32 @@
+#container {
+	width: 350px;
+	background: #ccc;
+	text-align: left;
+	margin: auto;
+}
+#container .inner {
+	padding: 10px;
+}
+body {
+	margin-top: 0;
+	text-align: center;
+}
+h1, form {
+	margin: 0;
+	text-align: left;
+}
+form {
+	margin: auto;
+	margin-top: 0;
+	width: 225px;
+}
+h1 {
+	font: bold 18px arial;
+}
+p, label {
+	margin-top: 0;
+	font: 14px arial;
+}
+input {
+	margin-top: 1px;
+}

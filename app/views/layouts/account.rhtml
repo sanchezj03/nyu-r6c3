@@ -1,0 +1,24 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>Welcome to IPS R6C3 Login Page</title>
+	<%= stylesheet_link_tag "login", "nifty" %>
+	<%= javascript_include_tag :defaults, "niftycube" %>
+</head>
+<body>
+	
+<div id="container">
+	<%= image_tag "cohort3.gif" %>
+	<div class="inner">
+		<div class="content"><%= yield %></div>
+	</div>
+</div>
+
+<script>
+NiftyLoad = function () {
+	Nifty("#container", "big bottom")
+}
+</script>
+
+</body>
+</html>

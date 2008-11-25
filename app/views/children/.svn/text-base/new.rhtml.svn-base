@@ -1,0 +1,40 @@
+<%= stylesheet_link_tag "child" %>
+<% form_tag do -%>
+
+<% if @child.errors.count > 0 %>
+	<div class="errors"><%= error_messages_for :child %></div>
+<% end %>
+
+<div class="rightcolumn">
+	<div class="fieldset" id="save">
+	<div class="inner">
+		<h3>Save Child</h3>
+	
+		<div>
+			You will be able to add caregivers, schools and the other information once you save this child. 
+			<p>
+				<div style="padding-bottom:3px">When was this data collected?</div>
+				<%= date_select :child, :collected_on %>
+			</p>
+			<p>Ready? <%= submit_tag "Save" %></p>
+		</div>
+	</div>
+	</div>
+</div>
+
+<div class="leftcolumn">
+	<div class="fieldset" id="child">
+	<div class="inner">
+		<h3>Child Information</h3>
+	
+		<div id="child_content"><%= render :partial => 'form' %></div>
+	</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+Nifty("#child")
+Nifty("#save")
+</script>
+
+<% end -%>

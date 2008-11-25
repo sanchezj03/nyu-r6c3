@@ -1,0 +1,59 @@
+<%= remote_link(new_child_caregiver_url(@child), 'caregivers', :text => "Add Caregiver", :class => "edit_link") %>
+<h3>Caregivers</h3>
+
+<% for caregiver in @child.caregivers %>
+<div id="caregivers<%= caregiver.id %>" style="margin-bottom:7px">
+	<b><%= caregiver.name %></b>
+	
+	<%= remote_link(edit_child_caregiver_url(@child, caregiver), "caregivers#{caregiver.id}", :class => "") %>, 
+	<%= remote_link(new_child_caregiver_phone_url(@child, caregiver), "caregivers#{caregiver.id}", :text => "Add Phone", :class => "") %>, 
+	<%= remote_link(new_child_caregiver_address_url(@child, caregiver), "caregivers#{caregiver.id}", :text => "Add Address", :class => "") %>
+	
+	<div class="indented">
+		<table>
+		<% if caregiver.relation %>
+		<tr>
+			<td>Relation:</td>
+			<td><%= caregiver.relation %></td>
+		</tr>
+		<% elsif caregiver.caregiver_relation_id %>
+		<tr>
+			<td>Relation:</td>
+			<td><%= caregiver.caregiver_relation.relation %></td>
+		</tr>
+		<% end %>
+		<% if caregiver.comments != "" %>
+		<tr>
+			<td>Comments:</td>
+			<td><%= caregiver.comments %></td>
+		</tr>
+		<% end %>
+		<% if caregiver.phones.count > 0 %>
+			<% for phone in caregiver.phones %>
+			<tr>
+				<td><%= phone.mode.capitalize %> phone: </td>
+				<td><%= phone.number %> 
+					<% if phone.has_comments? %><span style="color:gray"><%= phone.comments %></span><% end %>
+					<%= remote_link(edit_child_caregiver_phone_url(@child, caregiver, phone), "caregivers#{caregiver.id}", :text => "Edit", :class => "") %>
+				</td>
+			</tr>
+			<% end %>
+		<% end %>
+		<% if caregiver.addresses.count > 0 %>
+		<tr>
+			<td colspan="2">Addresses:</td>
+			<% for address in caregiver.addresses %>
+			<tr>
+				<td colspan="2" class="indented"><%= address %></td>
+			</tr>
+			<% end %>
+		</tr>
+		<% end %>
+		<tr>
+			<td style="width:100px">Collected on:</td>
+			<td><%= caregiver.collected_on %></td>
+		</tr>
+		</table>
+	</div>
+</div>
+<% end %>

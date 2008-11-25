@@ -1,0 +1,8 @@
+<%= remote_link(new_child_interview_url(@child), 'interviews', :text => "Add Interview", :class => "edit_link") %>
+<h3>Interviews</h3>
+
+<% for interview in @child.interviews %>
+<div id="interview<%= interview.id %>" style="margin-bottom:7px">
+	
+</div>
+<% end %>

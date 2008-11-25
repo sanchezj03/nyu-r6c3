@@ -1,0 +1,66 @@
+<%= hidden_field :location, 'type' %>
+
+<table>
+<tr>
+	<td style="width:10px"><%= check_box :location, :anticipated_location, {:onclick => "if (!this.checked) { $('classroom_id').show();$('school_id').hide(); } else { $('classroom_id').hide(); $('school_id').show(); }"}%></td>
+	<td>Is this an anticipated location?</td>
+</tr>
+</table>
+
+<table>
+<tr>
+	<td>Location (Edit):</td>
+	<td>
+		<%= select(:location, :status_id, LocationStatus.find(:all).collect { |s| [s.text, s.id.to_s] }, {:include_blank => true}, :onchange => "(this.selectedIndex == 1) ? $('new_school').show() : $('new_school').hide(); (this.selectedIndex == 2) ? $('other_school').show() : $('other_school').hide();") %>
+	</td>
+</tr>
+</table>
+
+<table id="new_school" style="width:200px;margin-left:20px;display:<%= "none" if @location.status_id != "1" %>">
+<tr id="school_id" style="display:none">
+	<td>School:</td>
+	<td><%= select :location, :school_id, School.find(:all).collect { |s| [s.name, s.id] }, {:include_blank => true} %></td>
+</tr>
+<tr id="classroom_id" style="display:">
+	<td>School &amp; Classroom:</td>
+	<td>
+		<select name="location[classroom_id]" id="location_classroom_id">
+			<option></option>
+			<%= option_groups_from_collection_for_select(School.find(:all), "#{type_name_without_location}_classrooms", :name, :id, :class_name, @location.classroom_id) %>
+		</select>
+	</td>
+</tr>
+</table>
+
+<table id="other_school" style="margin-left:20px">
+<tr>
+	<td>Other school:</td>
+	<td><%= text_field :location, :school_other %></td>
+</tr>
+<tr>
+	<td>Teacher's last name:</td>
+	<td><%= text_field :location, :teacher_ln_other %></td>
+</tr>
+<tr>
+	<td>Teacher's first name:</td>
+	<td><%= text_field :location, :teacher_fn_other %></td>
+</tr>
+</table>
+
+<table>
+<tr>
+	<td>Lost in Fall?:</td>
+	<td><%= check_box :location, :lost_fall %> If so, <%= select :location, :lost_fall_id, LostDataCompletionReason.find(:all).collect {|r| [ r.reason, r.id]}, :include_blank => true %></td>
+</tr>
+<tr>
+	<td>Lost in Spring?:</td>
+	<td><%= check_box :location, :lost_spring %> If so, <%= select :location, :lost_spring_id, LostDataCompletionReason.find(:all).collect {|r| [ r.reason, r.id]}, :include_blank => true %></td>
+</tr>
+	<td>Collected on:</td>
+	<td><%= date_select :location, :collected_on %></td>
+</tr>
+<tr>
+	<td>Comments:</td>
+	<td><%= text_area :location, :comments, :style => "width:200px;height:60px" %></td>
+</tr>
+</table>

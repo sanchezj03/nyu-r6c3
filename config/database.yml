@@ -1,0 +1,25 @@
+mysql_development:
+  adapter: mysql
+  database: r6c3_development
+  username: root
+  password:
+  
+development:
+  adapter: sqlserver
+  mode: ADO
+  database: R6c3v2_development
+  host:  cscapps
+
+test:
+  adapter: mysql
+  database: r6c3_test
+  username: root
+  password:
+  host: localhost
+
+production:
+  adapter: mysql
+  database: r6c3_production
+  username: root
+  password: 
+  host: localhost

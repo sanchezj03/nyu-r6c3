@@ -1,0 +1,35 @@
+<table>
+<tr>
+	<td>Location:</td>
+	<td>
+		<select name="location[status_id]" id="location_status" onchange="(this.selectedIndex == 1) ? $('new_school').show() : $('new_school').hide()">
+			<option></option>
+			<% for status in LocationStatus.find(:all)%>
+			<option value="<%= status.id %>"><%= status.text %></option>
+			<% end %>
+		</select>
+	</td>
+</tr>
+</table>
+
+<table id="new_school" style="display:none">
+<tr>
+	<td>School:</td>
+	<td><%= select(:location, :school_id, School.find(:all).collect { |s| ["P.S. #{s.number}", s.id] }) %></td>
+</tr>
+<tr>
+	<td>Classroom:</td>
+	<td><%= related_collection_select(:location, :classroom_id, [:location, :school_id], Classroom.find(:all, :order => 'created_on DESC'), :id, :class_name, :school_id) %></td>
+</tr>
+</table>
+
+<table>
+<tr>
+	<td>Collected on:</td>
+	<td><%= date_select :location, :collected_on %></td>
+</tr>
+<tr>
+	<td>Comments:</td>
+	<td><%= text_area :location, :comments, :style => "width:200px;height:60px" %></td>
+</tr>
+</table>

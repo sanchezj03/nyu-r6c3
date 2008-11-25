@@ -1,0 +1,11 @@
+<div id="new_caregiver" style="display:none;position:absolute;background:#fff;border:1px solid gray;padding:10px;margin-bottom:10px">
+	<% form_tag :controller => 'add', :action => 'caregiver', :id => @child do -%>
+	<b style="display:block;margin-bottom:5px">New Caregiver:</b>
+	<%= render :partial => 'add/caregiver' %>
+	<div style="margin-top:10px;">
+		<%= submit_tag "Save", :style => "margin-right:10px" %> <%= link_to_function "Cancel", "$('new_caregiver').hide()"%>
+	</div>
+	<% end -%>
+</div>
+
+

@@ -1,0 +1,18 @@
+1. Copy over folders and files:
+	a. app
+	b. config/routes.rb
+	c. db
+	d. public/stylesheets
+	e. public/javascripts
+	
+2. Create a database in mysql
+	a. Open console and run "mysql -u root -p"
+	b. Once in mysql, run "create database r6c3_development;"
+
+3. Edit config/database.yml and set which database
+	you would like to use
+
+4. Run rake db:migrate to create the schema in mySQL
+
+5. Install the acts_as_authenticated plugin by running:
+	ruby script/plugin install http://svn.techno-weenie.net/projects/plugins/acts_as_authenticated

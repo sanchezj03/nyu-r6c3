@@ -1,0 +1,39 @@
+<table border="1">
+<tr style="color:gray">
+	<% for item in @records.first.attributes %>
+	<td><%= item[0] %></td>
+	<% end %>
+</tr>
+
+<% for @record in @records %>
+<tr>
+	<% for item in @record.attributes %>
+	<td><%= item[1] %></td>
+	<% end %>
+</tr>
+<% end %>
+
+<% for @i in @intervention %>
+<tr style="color:blue">
+	<% for item in @i.attributes %>
+	<td><%= item[1] %></td>
+	<% end %>
+</tr>
+<% end %>
+
+<% for @c in @control %>
+<tr style="color:purple">
+	<% for item in @c.attributes %>
+	<td><%= item[1] %></td>
+	<% end %>
+</tr>
+<% end %>
+
+<% for @sum in @sums %>
+<tr style="color:Red">
+	<% for item in @sum.attributes %>
+	<td><%= item[1] %></td>
+	<% end %>
+</tr>
+<% end %>
+</table>

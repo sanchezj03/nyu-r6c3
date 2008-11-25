@@ -1,0 +1,23 @@
+<%= remote_link(new_child_eligibility_url(@child, :model => model), model, :text => "Add Eligibility") %>
+<h3>Eligibility for <%= model.constantize.type_name %></h3>
+
+<% for eligibility in @child.eligibilities.find_all_by_type(model) %>
+<div id="eligibilities<%= eligibility.id %>" style="margin-bottom:7px">
+	<div class="indented">
+		<%= remote_link(edit_child_eligibility_url(@child, eligibility, :model => model), model) %>
+		
+		<div<%= ' style="font-weight:bold"' if @child.eligibilities[0].id == eligibility.id %>>
+			<% if eligibility.eligibility_reason %>
+				<%= eligibility.eligibility_reason.reason %>
+			<% else %>
+				Eligible.
+			<%end %>
+			
+			<span style="color:gray">
+				<%= eligibility.comments if eligibility.comments != nil %>
+				(Collected on: <%= eligibility.collected_on %>)
+			</span>
+		</div>
+	</div>
+</div>
+<% end %>

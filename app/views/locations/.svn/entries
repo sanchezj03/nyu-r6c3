@@ -1,0 +1,64 @@
+8
+
+dir
+90
+svn://fahimo.com:1989/nyu/app/views/locations
+svn://fahimo.com:1989
+
+
+
+2008-01-06T18:03:49.024426Z
+83
+fahim
+
+
+svn:special svn:externals svn:needs-lock
+
+_form.rhtml
+file
+
+
+
+
+2008-01-06T17:06:54.000000Z
+139efef4ac6952abd8ee6aa6c82cfb23
+2008-01-06T18:03:49.024426Z
+83
+fahim
+
+edit.rhtml
+file
+
+
+
+
+2008-01-06T16:10:36.000000Z
+791dfbdd373908566e5f495146b406f6
+2008-01-06T18:03:49.024426Z
+83
+fahim
+
+_location.rhtml
+file
+
+
+
+
+2008-01-06T17:05:36.000000Z
+f8639023577bcd9a8d33441f35407b55
+2008-01-06T18:03:49.024426Z
+83
+fahim
+
+new.rhtml
+file
+
+
+
+
+2008-01-06T17:06:11.000000Z
+5b55c8375032d382afbb569ad39c2ba9
+2008-01-06T18:03:49.024426Z
+83
+fahim
+

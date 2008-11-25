@@ -1,0 +1,12 @@
+<div class="inner">
+	<%= remote_link(child_locations_url(@child), 'location', :lose_focus => true) %>
+	<h3>Update Location</h3>
+
+	<%= error_messages_for :location %>
+	<div class="indented">
+		<% remote_update_form_for @location, :element => 'location', :url => child_locations_url(@child) do -%>
+			<%= render :partial => 'form' %>
+			<%= submit_tag "Save"%>
+		<% end -%>
+	</div>
+</div>

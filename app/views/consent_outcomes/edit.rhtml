@@ -1,0 +1,12 @@
+<div class="inner">
+	<%= remote_link(child_consent_outcomes_url(@child), 'consent_outcome', :lose_focus => true) %>
+	<h3>Edit Consent Outcome Entry</h3>
+
+	<%= error_messages_for :consent %>
+	<div class="indented">
+		<% remote_update_form_for @consent, :element => 'consent_outcome', :url => child_consent_outcome_url(@child, @consent) do -%>
+			<%= render :partial => 'form' %>
+			<%= submit_tag "Save"%>
+		<% end -%>
+	</div>
+</div>

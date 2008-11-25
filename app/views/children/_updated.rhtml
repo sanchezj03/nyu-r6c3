@@ -1,0 +1,16 @@
+<script type="text/javascript">
+<%= 
+update_page do |page|
+ 	page.call('lose_focus_on_element', element)
+	page.show('notice')
+	page.replace_html('notice', "<p>#{message}</p>")
+	page.replace_html(element.to_s, :partial => segment, :locals => locals)
+	page.visual_effect(:highlight, highlight ? highlight : element)
+	page.visual_effect(:fade, 'notice', :duration => 5)
+	
+	for element, value in also_update
+		page.replace_html element, value
+	end
+end
+%>
+</script>

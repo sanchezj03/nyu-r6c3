@@ -1,0 +1,12 @@
+<div class="inner">
+	<%= remote_link(child_eligibilities_url(@child), 'eligibility', :lose_focus => true) %>
+	<h3>Edit Eligibility Entry</h3>
+
+	<%= error_messages_for :eligibility %>
+	<div class="indented">
+		<% remote_update_form_for @eligibility, :element => 'eligibility', :url => child_eligibility_url(@child, @eligibility) do -%>
+			<%= render :partial => 'form' %>
+			<%= submit_tag "Save"%>
+		<% end -%>
+	</div>
+</div>

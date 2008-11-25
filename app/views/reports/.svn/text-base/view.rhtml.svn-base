@@ -1,0 +1,15 @@
+<table border="1">
+<tr style="color:gray">
+	<% for item in @records.first.attributes %>
+	<td><%= item[0] %></td>
+	<% end %>
+</tr>
+
+<% for @record in @records %>
+<tr>
+	<% for item in @record.attributes %>
+	<td><%= item[1] %></td>
+	<% end %>
+</tr>
+<% end %>
+</table>

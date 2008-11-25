@@ -1,0 +1,2 @@
+module ConsentOutcomesHelper
+end

@@ -1,0 +1,33 @@
+<table width="100" cellpadding="3" cellspacing="0">
+<tr>
+	<td colspan="3"><b>Address:</b></td>
+</tr>
+<tr>
+	<td><%= text_field :address, :home_number, :size => 6 %></td>
+	<td><%= text_field :address, :street %></td>
+	<td><%= text_field :address, :apartment, :size => 10 %></td>
+</tr>
+<tr style="color:gray">
+	<td>Home #</td>
+	<td>Street</td>
+	<td>Apartment<td>
+<tr>
+	<td><%= text_field :address, :city, :size => 10 %></td>
+	<td colspan="2">
+		<%= text_field :address, :state, :size => 3 %>
+		<%= text_field :address, :zip_code, :size => 7 %></td>
+</tr>
+<tr style="color:gray">
+	<td>City</td>
+	<td>State &amp; Zip code</td>
+</tr>
+<tr>
+	<td>Comments:</td>
+	<td colspan="2"><%= text_field :address, :comments %></td>
+</tr>
+<tr>
+	<td>Collected:</td>
+	<td colspan="2"><%= date_select :address, :collected_on %></td>
+</tr>
+</table>
+

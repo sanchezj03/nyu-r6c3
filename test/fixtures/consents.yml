@@ -1,0 +1,48 @@
+# == Schema Information
+# Schema version: 51
+#
+# Table name: consents
+#
+#  caregiver_id         :integer       
+#  child_id             :integer       
+#  collected_on         :datetime      
+#  comments             :string(255)   
+#  consent_reason_id    :integer       
+#  consented            :integer       
+#  created_on           :datetime      
+#  dt                   :string(100)   default("getdate")
+#  id                   :integer       not null, primary key
+#  is_primary_caregiver :integer       
+#  phase                :integer       
+#  user_id              :integer       
+#  withdrawn            :integer       
+#
+
+consented:
+  child: validates
+  consented: true
+  caregiver_id: 2
+  phase: 1
+not_consented:
+  child: validates
+  consented: false
+  caregiver_id: 2
+  phase: 2
+  consent_reason: not_consented
+withdrew:
+  child: validates
+  consented: false
+  withdrawn: true
+  consent_reason: refused
+  phase: 3
+  caregiver_id: 3
+reason_missing:
+  child: validates
+  phase: 1
+  caregiver_id: 2
+phase_missing:
+  child: validates
+  caregiver_id: 2
+caregiver_missing:
+  child: validates
+  phase: 1

@@ -1,0 +1,28 @@
+<table>
+<p></p>	
+<tr>
+	<td>Relationship and Date:</td>
+	<td><%= text_field :entry, :relationship %></td>
+</tr>
+	
+<tr>
+	<td>First Name:</td>
+	<td><%=text_field :entry, :first_name %></td>
+</tr>
+<tr>
+	<td>Last Name:</td>
+	<td><%= text_field :entry, :last_name %></td>
+</tr>
+<tr>
+	<td>Phone Number:</td>
+	<td><%= text_field :entry, :phone_number %></td>
+</tr>
+
+<tr>
+	<td>Address:</td>
+	<td><%= text_area :entry, :address, :rows => 3 %></td>
+</tr>
+
+	<td><%= submit_tag "Save" %></td>
+
+</table>

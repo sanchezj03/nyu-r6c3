@@ -1,0 +1,29 @@
+<%= stylesheet_link_tag "child" %>
+
+<div class="rightcolumn">
+	<div class="fieldset" id="caregivers_content">
+		<div id="caregivers" class="inner"><%= render :partial => '/caregivers/caregivers' %></div>
+	</div>
+	
+	<div class="fieldset" id="eligibility_content">
+		<div id="eligibility" class="inner"><%= render :partial => '/eligibilities/eligibility' %></div>
+	</div>
+</div>
+
+<div class="leftcolumn">
+	<div class="fieldset" id="child_content">
+		<div id="child" class="inner"><%= render :partial => '/children/child' %></div>
+	</div>
+	
+	<div class="fieldset" id="consent_content">
+		<div id="consent" class="inner"><%= render :partial => '/consents/consent' %></div>
+	</div>
+	
+	<div class="fieldset" id="location_content">
+		<div id="location" class="inner"><%= render :partial => '/locations/location' %></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+["child_content", "caregivers_content", "eligibility_content"].each(function (key) { Nifty("#" + key) })
+</script>

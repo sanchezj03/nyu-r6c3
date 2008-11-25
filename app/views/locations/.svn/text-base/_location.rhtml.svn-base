@@ -1,0 +1,19 @@
+<%= remote_link(new_child_location_url(@child), 'location', :text => "Add Location") %>
+<h3>Location</h3>
+
+<% for location in @child.locations %>
+<div id="location<%= location.id %>" style="margin-bottom:7px;<%= "color:green" if @child.locations.first.id == location.id %>">
+	<div class="indented">
+		<%= remote_link(edit_child_location_url(@child, location), "location") %>
+		
+		<%= location.location_status.text %>. 
+		<% if location.classroom_id and location.status_id == "1" %>
+			Class <%= location.classroom.class_name %> in P.S. <%= location.classroom.school.number %>.
+		<% end %>
+		<% if location.comments %>
+			<span style="color:gray"><%= location.comments %></span>
+		<% end %>
+		<span style="color:gray">(Collected on: <%= location.collected_on %>)</span>
+	</div>
+</div>
+<% end %>

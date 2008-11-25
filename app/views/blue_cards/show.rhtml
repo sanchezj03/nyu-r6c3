@@ -1,0 +1,26 @@
+<%= stylesheet_link_tag "child" %>
+
+<div class="rightcolumn">
+	<div class="fieldset">
+		<div class="inner">
+			<h3>Add Blue Card</h3>
+			<% form_tag :action => 'create', :id => @child do -%>
+				<% @entry = BlueCardEntry.new %>
+				<%= render :partial => 'form' %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<div class="leftcolumn">
+	<% for @entry in @child.blue_card_entries %>
+	<div class="fieldset" style="background:#<%= cycle("eee", "fff") %>">
+		<div class="inner">
+			<h3>Existing Blue Card</h3>
+			<% form_tag :action => 'update', :id => @entry do -%>
+				<%= render :partial => 'form' %>
+			<% end -%>
+		</div>
+	</div>
+	<% end %>
+</div>

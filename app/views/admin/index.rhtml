@@ -1,0 +1,23 @@
+<% form_tag({:action => 'school'}, :method => :get) do %>
+<p />
+	<strong>Select a year and grade:</strong>
+	<table>
+	<tr>
+		<td>Year:</td>
+		<td><%= select_year(Date.today, :start_year => 2005, :field_name => 'year') %></td>
+	</tr>
+	<tr>
+		<td>Grade:</td>
+		<td><%= select_tag :grade_name, options_for_select(['K', 'PreK', 'Grade1', 'Grade2']) %></td>
+	</tr>
+	<tr>
+		<td>School:</td>
+		<td><%= select_tag :id, options_for_select(School.find(:all).collect { |sch| [sch.name, sch.id] }) %></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><%= submit_tag "Go" %></td>
+	</tr>
+	</table>
+
+<% end %>

@@ -1,0 +1,40 @@
+<% if !current_user.is_ra? %>
+	<%= remote_link(new_child_location_url(@child, :type => "#{type}Location"), "location_#{type}", :text => "Add Location") %>
+<% end %>
+
+<h3>Location <%= name %></h3>
+
+<% for location in @child.locations.find_all_by_type("#{type}Location") %>
+<div id="location<%= location.id %>" style="margin-bottom:7px;<%= "color:green" if @child.locations.first.id == location.id %>">
+	<div class="indented">
+
+		<% if !current_user.is_ra? %>
+			<%= remote_link(edit_child_location_url(@child, location), "location_#{type}") %>
+		<% end %>
+		
+		<% if location.lost_in_spring? %>
+			This child was lost in <%= "spring" %> because: <%= location.lost_reason %>
+		<% if location.lost_in_fall? %>
+			This child was lost in <%= "fall" %> because: <%= location.lost_reason %>
+		<% end %>
+		<% end %>
+
+			<% if location.anticipated? %> Child is anticipated to be at: <% end %>
+		
+			<%= location.location_status.text if location.location_status %>. 
+			<% if location.classroom_id and location.status_id == "1" and !current_user.is_ra? %>
+				Class <%= location.classroom.class_name %> in P.S. <%= location.classroom.school.number %>.
+			<% end %>
+			
+			<% if location.status_id == "2" %>
+				School "<%= location.school_other %> with teacher "<%= location.teacher_other %>"
+			<% end %>
+		
+		<% if location.comments %>
+			<span style="color:gray"><%= location.comments %></span>
+		<% end %>
+		
+		<span style="color:gray">(Collected on: <%= location.collected_on %>)</span>
+	</div>
+</div>
+<% end %>

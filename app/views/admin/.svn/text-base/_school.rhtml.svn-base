@@ -1,0 +1,107 @@
+<style type="text/css">
+form { margin: 0;}
+
+</style>
+
+<table style="margin-top:10px;width:960px;font:14px verdana">
+<tr>
+	<td style="width:440px" valign="top">
+		<b>Active Classes:</b> <%= link_to_function "+ Add Class", "$('new_class_#{@school.id}').toggle()", :style => "padding-left:20px;font-size:11px"%>
+		
+		<div id="new_class_<%= @school.id %>" style="display:none;border:1px solid #ccc;padding:5px;position:absolute;background:#fff;font-size:13px">
+			<% form_tag :controller => 'add', :action => 'classroom', :id => @school do -%>
+			<table style="font-size:12px">
+			<tr>
+				<td colspan="2"><b>New Class:</td>
+			</tr>
+			<tr>
+				<td>Teacher:</td>
+				<td><%= select :classroom, :teacher_id, @school.teachers.collect {|t| [t.name, t.id] }, :include_blank => true %></td>
+			</tr>
+			<tr>
+				<td>Class Hours:</td>
+				<td><%= select :classroom, :hours, ["am", "pm", "allday"], :include_blank => true %></td>
+			</tr>
+			<tr>
+				<td>Grade:</td>
+				<td><%= text_field :classroom, :grade, :size => 5%></td>
+			</tr>
+			<tr>
+				<td colspan="2"><%= submit_tag "Save" %> <%= link_to_function "Cancel", "$('new_class_#{@school.id}').hide()" %></td>
+			</tr>
+			</table>
+			<% end -%>
+		</div>
+		
+		<table style="font:13px arial;width:100%;margin-top:3px">
+		<tr>
+			<td style="color:gray">Teacher</td>
+			<td style="color:gray">Class Type</td>
+			<td style="color:gray">Students</td>
+			<td style="color:gray">ClassId</td>
+		</tr>
+		<% for classroom in @school.classrooms.find(:all, :order => 'created_on DESC') %>
+		<tr>
+			<td><%= classroom.staff.name %></td>
+			<td><%= classroom.hours %></td>
+			<td><%= classroom.locations.count %></td>
+			<td><%= classroom.grade %></td>
+		</tr>
+		<% end %>
+		</table>
+	</td>
+	<td style="width:410px;border-left:1px solid #eee;padding-left:9px;" valign="top">
+		<b>Staff:</b> <%= link_to_function "+ Add Member", "$('new_staff_#{@school.id}').toggle()", :style => "padding-left:20px;font-size:11px"%>
+		
+		<div id="new_staff_<%= @school.id %>" style="display:none;border:1px solid #ccc;padding:5px;position:absolute;background:#fff;font-size:13px">
+			<% form_tag :controller => 'add', :action => 'staff', :id => @school do -%>
+			<table style="font-size:12px">
+			<tr>
+				<td colspan="2"><b>New Staff Member:</td>
+			</tr>
+			<tr>
+				<td>First Name:</td>
+				<td><%= text_field :staff, :first_name, :size => 20 %></td>
+			</tr>
+			<tr>
+				<td>Last Name:</td>
+				<td><%= text_field :staff, :last_name, :size => 20 %></td>
+			</tr>
+			<tr>
+				<td>Title:</td>
+				<td><%= select :staff, :title, StaffTitle.find(:all).collect { |s| [s.title, s.title] } %>
+			</tr>
+			<tr>
+				<td>Collected on:</td>
+				<td><%= date_select :staff, :collected_on %></td>
+			</tr>
+			<tr>
+				<td>Comments:</td>
+				<td><%= text_area :staff, :comments, :style => "width:200px;height:50px" %></td>
+			</tr>
+			<tr>
+				<td colspan="2"><%= submit_tag "Save" %> <%= link_to_function "Cancel", "$('new_staff_#{@school.id}').hide()" %></td>
+			</tr>
+			</table>
+			<% end -%>
+		</div>
+		
+		<table style="font:13px arial;width:100%;margin-top:3px">
+		<tr>
+			<td style="color:gray">Name</td>
+			<td style="color:gray">Position</td>
+			<td style="color:gray">Comments</td>
+		</tr>
+		<% if Staff.count(:conditions => ['school_id = ?', @school.id]) > 0 %>
+			<% for staff in Staff.find_all_by_school_id(@school.id) %>
+			<tr>
+				<td><%= staff.name %></td>
+				<td style="padding-right:10px"><%= staff.title %></td>
+				<td><%= staff.comments %> <small>(Collected on: <%= staff.collected_on %>)</small></td>
+			</tr>
+			<% end %>
+		<% end %>
+		</table>
+	</td>
+</tr>
+</table>

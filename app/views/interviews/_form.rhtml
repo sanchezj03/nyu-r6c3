@@ -1,0 +1,11 @@
+<table width="100">
+<tr>
+	<td>Pre-K Fall:</td>
+	<td><%= select :interview, :status, InterviewTestingOutcome.find(:all).collect {|r| [r.status, r.status] }, :include_blank => :true %></td>
+</td>
+</tr>
+<tr>
+	<td></td>
+	<td>First name</td>
+</tr>
+</table>

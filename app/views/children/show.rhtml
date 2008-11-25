@@ -1,0 +1,54 @@
+<%= stylesheet_link_tag "child" %>
+
+<div class="bluecardentrylink" style="margin-bottom:10px">
+	<%= link_to "View Blue Card Entry for this child", child_blue_card_url(@child) %>
+</div>
+
+<div class="rightcolumn">
+	<div class="fieldset" id="caregivers_content">
+		<div id="caregivers" class="inner"><%= render :partial => '/caregivers/caregivers' %></div>
+	</div>
+	
+	<%= fieldset_box(:PreKEligibility, {:partial => '/eligibilities/eligibility'}, {:model => 'PreKEligibility'}) %>
+	<%= fieldset_box(:KEligibility, {:partial => '/eligibilities/eligibility'}, {:model => 'KEligibility'}) %>
+	<%= fieldset_box(:Grade1Eligibility, {:partial => '/eligibilities/eligibility'}, {:model => 'Grade1Eligibility'}) %>
+	<%= fieldset_box(:Grade2Eligibility, {:partial => '/eligibilities/eligibility'}, {:model => 'Grade2Eligibility'}) %>
+
+	<%= fieldset_box(:Interviews, {:partial => '/interviews/interview'}) %>
+</div>
+
+<div class="leftcolumn">
+	<div class="fieldset" id="child_content">
+		<div id="child" class="inner"><%= render :partial => '/children/child' %></div>
+	</div>
+	
+	<div class="fieldset" id="consent_content">
+		<div id="consent" class="inner"><%= render :partial => '/consents/consent' %></div>
+	</div>
+
+	<div class="fieldset" id="consent_outcome_content">
+		<div id="consent_outcome" class="inner"><%= render :partial => '/consent_outcomes/consent_outcome' %></div>
+	</div>
+	
+	<%# if !current_user.is_ra? %>
+	<div class="fieldset" id="location_PreK_content">
+		<div id="location_PreK" class="inner"><%= render :partial => '/locations/location', :locals => { :name => "Pre-K", :type => "PreK" } %></div>
+	</div>
+	
+	<div class="fieldset" id="location_K_content">
+		<div id="location_K" class="inner"><%= render :partial => '/locations/location', :locals => { :name => "Kindergarten", :type => "K" } %></div>
+	</div>
+	
+	<div class="fieldset" id="location_Grade1_content">
+		<div id="location_Grade1" class="inner"><%= render :partial => '/locations/location', :locals => { :name => "Grade 1", :type => "Grade1" } %></div>
+	</div>
+	
+	<div class="fieldset" id="location_Grade2_content">
+		<div id="location_Grade2" class="inner"><%= render :partial => '/locations/location', :locals => { :name => "Grade 2", :type => "Grade2" } %></div>
+	</div>
+	<%# end %>
+</div>
+
+<script type="text/javascript">
+["child_content", "caregivers_content", "eligibility_content"].each(function (key) { Nifty("#" + key) })
+</script>

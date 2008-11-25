@@ -1,0 +1,40 @@
+Edit Address Information for <%=@child.name%> <hr>
+
+<% form_tag :controller => 'edit', :action => "update_address", :id => @child.rchild_id, :address_id => @address.id do -%>
+
+		<table>
+<tr>
+			<td><%= text_field :address, :home_number, :size => 6 %></td>
+			<td><%= text_field :address, :street %></td>
+			<td><%= text_field :address, :apartment, :size => 10 %></td>
+		</tr>
+		<tr style="font-size:11px;color:gray">
+			<td>(number)</td>
+			<td>(street)</td>
+			<td>(apartment #)</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<%= text_field :address, :city, :size => 10, :value => "Brooklyn" %>, 
+				<%= text_field :address, :state, :size => 3, :value => "NY" %> &nbsp;&nbsp;&nbsp; Zip Code: 
+				<%= text_field :address, :zip_code, :size => 7 %>
+			</td>
+		</tr>
+		<tr>
+			<td>Comments:</td>
+			<td><%= text_field :address, :comments %></td>
+		</tr>
+		<tr>
+			<td>Collected:</td>
+			<td><%= date_select :address, :collected_on %></td>
+		</tr>
+		</table>
+
+
+
+<%= submit_tag "Save" %>   
+
+<%=link_to "Cancel", :controller=> 'browse', :action=> "child", :id=> @child.id %> 
+
+
+<% end -%> 

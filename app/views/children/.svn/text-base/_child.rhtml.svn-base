@@ -1,0 +1,68 @@
+<%= remote_link(edit_child_url, 'child') %>
+<h3>Child Information</h3>
+
+<div class="indented">
+	<table style="width:300px">
+	<tr>
+		<td>Name:</td>
+		<td><%= @child.name %></td>
+	</tr>
+	<tr>
+		<td>Recruitment Id:</td>
+		<td><%= @child.recruitment_id %></td>
+	</tr>
+	<tr>
+		<td>Child ID:</td>
+		<td><%= @child.child_id || "Not yet consented" %></td>
+	</tr>
+	<tr>
+		<td>Child's date of birth:</td>
+		<td><%= @child.birthday || "Not specified" %></td>
+	</tr>
+	<tr>
+		<td>Child's gender:</td>
+		<td><%= @child.sex.capitalize %></td>
+	</tr>
+	</table>
+
+	<table style="margin-top:10px;width:300px">
+	<tr>
+		<td colspan="2">The following describes the child's race:</td>
+	</tr>
+	<% if @child.hispanic? %>
+	<tr>
+		<td>*</td>
+		<td>Latino/Hispanic</td>
+	</tr>
+	<% end %>
+	<% if @child.race.size > 0 %>
+		<% for race in @child.race %>
+		<tr>
+			<td>*</td>
+			<td><%= race %></td>
+		</tr>
+		<% end %>
+	<% elsif !@child.hispanic? %>
+	<tr>
+		<td>*</td>
+		<td>Not specified</td>
+	</tr>
+	<% end %>
+	</table>
+
+	<% if @child.yoked_pair %>
+	<p>The child is a yoked pair.
+	 	<% if @child.is_primary != nil %>
+			<%= @child.pronoun.capitalize %> is the <%= @child.is_primary ? "primary": "secondary" %> child.
+		<% else %>
+			It is not specified whether <%= @child.pronoun %> is the primary or secondary child.
+		<% end%>
+	</p>
+	<% end %>
+	
+	<% if @child.child_is_linked %>
+		<p>This child is linked<%= " to #{@child.linked_child}" if @child.linked_child != "" %>.</p>
+	<% end %>
+	
+	</table>
+</div>

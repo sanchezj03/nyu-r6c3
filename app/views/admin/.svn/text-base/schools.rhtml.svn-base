@@ -1,0 +1,16 @@
+<h1>Schools</h1>
+
+<style type="text/css">
+.school {
+	margin-bottom: 10px;
+}
+</style>
+
+<% for @school in School.find(:all)%>
+<div class="school">
+	<%= link_to_remote "P.S. #{@school.number}", :url => {:action => 'school', :id => @school}, :update => "s#{@school.id}" %>
+	<div id="s<%= @school.id %>">
+		<% if params[:show] and params[:show].to_i == @school.id %><%= render :partial => 'school' %><% end %>
+	</div>
+</div>	
+<% end %>

@@ -1,0 +1,66 @@
+.fieldset {
+	border: 0;
+	background: #f8f8f8;
+	width: 100%;
+	overflow: auto;
+	margin-bottom: 10px;
+}
+.fieldset .inner {
+	padding: 5px;
+}
+h3 {
+	font-weight: bold;
+	margin: 0 0 10px 0;
+}
+.fieldset .indented {
+	padding-left: 20px;
+}
+
+.fieldWithErrors {
+	border: 1px solid red;
+}
+.fieldWithErrors input {
+	width: 100%;
+}
+
+.errors {
+	background: pink;
+	margin: 0 0 10px 0;
+}
+.errorExplanation {
+	padding: 1px 0 5px 9px;
+	background: pink;
+	margin-bottom: 10px;
+}
+	.errors h2 {
+		font-weight: bold;
+	}
+	.errors ul {
+		margin: 0;
+	}
+	.errors p {
+		margin: 0 0 4px 0;
+	}
+.leftcolumn, .rightcolumn {
+	background: #fff;
+}
+.rightcolumn {
+	float: right;
+	width: 49%;
+	margin-left: 1%;
+}
+.leftcolumn {
+	/* no float 'cause of the stupid height shindig */
+	width: 50%;
+}
+	.leftcolumn table, .rightcolumn table {
+		width: 100%;
+	}
+	
+.edit_link {
+	float: right;
+}
+
+.focused {
+	background: #FFFFCC;
+}

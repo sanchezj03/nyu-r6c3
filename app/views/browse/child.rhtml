@@ -1,0 +1,223 @@
+<style type="text/css">
+.child, .caregiver, .box {
+	margin: 0px 0 20px 0px;
+	padding: 10px 0 10px 10px;
+	width: 90%;
+	border: 1px solid #ddd;
+}
+h3 {
+	margin: 0;
+}
+h1 {
+	margin: 0 0 30px 0;
+}
+.date {
+	margin-bottom: 30px;
+}
+</style>
+
+<%= stylesheet_link_tag "nifty" %>
+
+Child's Name: 
+<h1><%= @child.name %></h1>
+
+<table style="width:780px" cellspacing="0" cellpadding="0"  bgcolor="#CCCCCC" >
+<tr>
+	<td style="width:390px;" valign="top">
+		<h3>Child information</h3>
+		<div class="child">
+			<table width="300" style="margin-bottom:20px">
+			<tr>
+				<td><%= link_to "Edit child information", :controller => "Edit", :action => "child", :id => @child.recruitment_id %></td>
+			</tr>
+			<tr>
+				<td>Recruitment Id:</td>
+				<td><%= @child.recruitment_id %></td>
+			</tr>
+			<% if @child.child_id %>
+			<tr>
+				<td>Child ID:</td>
+				<td><%= @child.child_id %></td>
+			</tr>
+			<% end %>
+			<tr>
+				<td>Child's date of birth:</td>
+				<td><%= @child.birthday %></td>
+			</tr>
+			<tr>
+				<td>Child's gender:</td>
+				<td><%= @child.sex.capitalize %></td>
+			</tr>
+			</table>
+	
+			<table style="margin-bottom:20px">
+			<tr>
+				<td colspan="2">The following describes the child's race:</td>
+			</tr>
+			<% if @child.hispanic? %>
+			<tr>
+				<td>*</td>
+				<td>Latino/hispanic</td>
+			</tr>
+			<% end %>
+			<% for race in @child.race %>
+			<tr>
+				<td>*</td>
+				<td><%= race %></td>
+			</tr>
+			<% end %>
+			</table>
+		
+			<% if @child.yoked_pair %>
+			The child is a yoked pair, and <%= @child.gender == "m" ? "he" : "she" %> is the <%= @child.primary_secondary ? "Primary":"Secondary" %> child (p=Primary or S=Secondary).
+			
+			<% else %>
+				This child is not a yoked pair.
+			<% end %>
+				</div>
+		
+		<% if @child.eligible? and @child.caregivers.size > 0 %>
+		<h3>Consent <%= link_to_function "+ Update Consent", "$('update_consent').toggle()", :style => "padding-left:20px;font:11px arial" %></h3>
+		<div class="box">
+			<%= render :partial => 'new_consent' %>
+
+			<ol style="font:normal 12px verdana;list-style-type:none;margin:0;padding-left:20px">
+			<% for consent in @child.consents %>
+				<li style="margin-bottom:6px">
+					<em>Phase <%= consent.phase %>:</em> 
+					<% if consent.withdrawn %>
+						<span style="color:red">Withdrawn!</span>
+					<% elsif consent.consented? %>
+						Consented!
+					<% else %>
+						<%= consent.consent_reason.reason %>.
+					<% end %> 
+					
+					<span style="color:gray">
+					<% if consent.comments %><%= consent.comments %><% end %>
+					<% if consent.caregiver %>
+						(Caregiver: <%= consent.caregiver.name %>.
+							<% if consent.respondent %>This caregiver is the respondent<% end %>)
+					<% end %>
+					</span>
+					
+					<%= link_to "Edit", :controller => "edit", :action => "consent", :id => @child.rchild_id, :consent_id => consent.id %>	
+				</li>
+			<% end %>
+			</ol>
+		</div>
+		<% end %>
+		
+		<h3>Location <%= link_to_function "+ Update Location", "$('new_location').toggle()", :style => "padding-left:20px;font:11px arial" %></h3>
+		<div class="box">
+			<%= render :partial => 'new_location' %>
+			
+			<ol style="font:normal 12px verdana;list-style-type:none;margin:0;padding-left:20px">
+			<% for @location in @child.locations %>
+				<li style="margin-bottom: 8px;<%= "color:green" if @child.locations.first == @location %>">
+					<%= @location.location_status.text %>. 
+					<% if @location.classroom_id and @location.status_id == "1" %>
+						Class <%= @location.classroom.class_name %> in P.S. <%= @location.classroom.school.number %>.
+					<% end %>
+					<% if @location.comments %>
+						<span style="color:gray"><%= @location.comments %></span>
+					<% end %>
+					<small>	<span style="color:gray">(Collected on: <%= @location.collected_on %>)</span></small>
+						<%= link_to "Edit", :controller => "edit", :action => "location", :id => @child.rchild_id, :location_id => @location.id %>	
+				
+				
+				</li>
+			<% end %>
+		</div>
+	</td>
+	<td style="width:390px" valign="top" rowspan="2">
+		<h3>Eligibility <%= link_to_function "+ Update Eligibility", "$('update_eligibility').toggle()", :style => "padding-left:20px;font:11px arial" %>
+		<div class="box">
+			<%= render :partial => 'new_eligibility' %>
+			<ol style="font:normal 12px verdana;list-style-type:none;margin:0;padding-left:20px">
+				<% for eligible in @child.eligibilities %>
+				<li style="margin-bottom:8px"><%= @child.pronoun.capitalize %> is <%= "not" if !eligible.eligible %> eligible. <%= "#{eligible.eligibility_reason.reason}." if !eligible.eligible %>
+					<% if eligible.comments != nil %><span style="display:block;color:gray"><%= eligible.comments %></span><% end %>
+					<span style="color:gray"><small>(Collected on: <%= eligible.collected_on %>)</small></span>
+						<%= link_to "Edit", :controller => "edit", :action => "eligibility", :id => @child.rchild_id, :eligibility_id => eligible.id %>	
+	
+		<% end %>
+			</ol>
+		</div>
+		
+		<h3>Caregiver and Addresses <%= link_to_function "+ Add Caregiver", "$('new_caregiver').toggle()", :style => "padding-left:20px;font:11px arial" %></h3>
+		<div class="caregiver">
+			<%= render :partial => 'new_caregiver' %>
+			
+			<% for @caregiver in @child.caregivers %>
+			<table cellspacing="0" cellpadding="3" style="margin-bottom:15px;padding-bottom:3px;border-bottom:1px solid #eee">
+			<tr>
+				<td>Name:</td>
+				<td><%= @caregiver.name %></td>
+			</tr>
+			<tr>
+				<td valign="top">Relation:</td>
+				<td><%= @caregiver.caregiver_relation.relation if @caregiver.caregiver_relation %>
+				<%= "<br />" if @caregiver.caregiver_relation and @caregiver.relation != "" %>
+				<%= @caregiver.relation %></td>
+			</tr>
+			<tr>
+				<td>Collected:</td>
+				<td><%= @caregiver.collected_on %></td>
+			</tr>
+			<!-- Show current addresses -->
+			
+			<tr>
+				<td>Address:</td>
+				<td><%= @caregiver.address %>
+					<span style="color:gray"><small><% if @caregiver.address %>(Collected on: <%= @caregiver.address.collected_on %>)<% end %></small></span>
+					 <%= link_to_function "+ Add", "$('new_address').toggle()", :style => "font-size:11px;color:blue" %></td>
+			</tr>
+			<!-- End showing current addresses -->
+			
+			<%= render :partial => 'new_address' %>
+			
+			<!-- Show all previous addresses -->
+			<% if @caregiver.addresses.count > 1 %>
+				<% for @address in @caregiver.addresses.find(:all, :conditions => ["id != ?", @caregiver.address.id]) %>
+				<tr>
+					<td></td>
+					<td style="color:gray"><%= @address %>
+					</td>
+				</tr>
+				<% end %>
+			<% end %>
+			<!-- End showing all previous addresses -->
+			<tr>
+				<td valign="top">Phone:</td>
+				<td>
+					<table cellpadding="0" cellspacing="0">
+					<% @phone = @caregiver.home_phone %>
+					<%= render :partial => 'phone' if @phone %>
+					
+					<% @phone = @caregiver.mobile_phone %>
+					<%= render :partial => 'phone' if @phone %>
+					
+					<% @phone = @caregiver.work_phone %>
+					<%= render :partial => 'phone' if @phone %>
+					
+					<%= link_to_function "+ Add number", "$('new_phone').toggle()", :style => "font-size:11px;color:blue" %>
+					<%= render :partial => 'new_phone' %>
+					</table>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>Comments:</td>
+				<td><%= simple_format @caregiver.comments %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= link_to "Edit this caregiver", :controller => 'edit', :action => 'caregiver', :id => @child.rchild_id, :caregiver_id => @caregiver.id %></td>
+			</tr>
+			</table>
+			<% end %>
+		</div>
+	</td>
+</tr>
+</table>
